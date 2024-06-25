@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+ 
+    "resources": [
+    {
+      "type": "Microsoft.Synapse/workspaces",
+      "apiVersion": "2021-06-01",
+      "name": "[parameters('workspaceName')]",
+      "location": "[parameters('location')]",
+            "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "defaultDataLakeStorage": {
+          "accountUrl": "[parameters('defaultDataLakeStorageAccountUrl')]",
+          "filesystem": "[parameters('defaultDataLakeStorageFilesystem')]"
+        },
+        "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
+        "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]"
+      },
+      "dependsOn": []
+    }
+  ],
+    "parameters": {
+      "workspaceName": {
+        "type": "string",
+        "defaultValue": "mytestsynapseworkspace1",
+        "metadata": {
+          "description": "Name of the Synapse workspace."
+        }
+      },
+      "location": {
+        "type": "string",
+        "defaultValue": "Australia East",
+        "metadata": {
+          "description": "Location for the Synapse workspace."
+        }
+      },
+      "defaultDataLakeStorageAccountUrl": {
+        "type": "string",
+        "defaultValue": "https://mytestsynstorage.dfs.core.windows.net",
+        "metadata": {
+          "description": "URL of the default data lake storage account."
+        }
+      },
+      "defaultDataLakeStorageFilesystem": {
+        "type": "string",
+        "defaultValue": "mytestsynfileshare",
+        "metadata": {
+          "description": "File system name of the default data lake storage."
+        }
+      },
+      "sqlAdministratorLogin": {
+        "type": "string",
+        "defaultValue": "sqladminuser",
+        "metadata": {
+          "description": "SQL administrator login name."
+        }
+      },
+      "sqlAdministratorLoginPassword": {
+        "type": "string",
+        "metadata": {
+          "description": "SQL administrator login password."
+        }
+      }
+    }
+  }
